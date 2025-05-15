@@ -41,6 +41,7 @@ app.get('/', (req, res) => {
 
 // Rotas para Usuário
 app.post('/usuarios', UsuarioController.criarUsuario);
+app.post('/usuarios/login', UsuarioController.loginUsuario);
 
 
 

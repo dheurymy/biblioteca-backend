@@ -1,4 +1,7 @@
 const Usuario = require("../models/Usuario");
+const jwt = require('jsonwebtoken'); // Importa o módulo jsonwebtoken para autenticação
+const bcrypt = require("bcryptjs");
+
 
 const criarUsuario = async (req, res) => {
     try {
@@ -21,4 +24,38 @@ const criarUsuario = async (req, res) => {
     }
 };
 
-module.exports = { criarUsuario };
+
+
+
+
+const loginUsuario = async (req, res) => {
+    try {
+        const { cpf, senha } = req.body;
+
+        // Verifica se o usuário existe pelo CPF
+        const usuario = await Usuario.findOne({ cpf });
+        if (!usuario) {
+            return res.status(400).json({ mensagem: "Usuário não encontrado." });
+        }
+
+        // Verifica se a senha informada está correta
+        const senhaCorreta = await usuario.compareSenha(senha);
+        if (!senhaCorreta) {
+            return res.status(400).json({ mensagem: "Senha inválida." });
+        }
+
+        // Gera token JWT
+        const token = usuario.generateAuthToken();
+
+        res.status(200).json({ mensagem: "Login realizado com sucesso!", token });
+    } catch (erro) {
+        res.status(500).json({ mensagem: "Erro ao realizar login.", erro });
+    }
+};
+
+
+
+
+
+
+module.exports = { criarUsuario, loginUsuario };
