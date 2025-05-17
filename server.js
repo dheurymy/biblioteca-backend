@@ -8,6 +8,9 @@ const bcrypt = require('bcryptjs'); // Importa o módulo bcrypt para hash de sen
 const Usuario = require('./models/Usuario'); // Importa o modelo de Usuário
 const UsuarioController = require('./controllers/UsuarioController'); // Importa o controlador de Usuário
 
+const Endereco = require('./models/Endereco'); // Importa o modelo de Endereço
+const EnderecoController = require('./controllers/EnderecoControler'); // Importa o controlador de Endereço
+
 
 dotenv.config(); // Carrega as variáveis de ambiente do arquivo .env
 
@@ -43,7 +46,8 @@ app.get('/', (req, res) => {
 app.post('/usuarios', UsuarioController.criarUsuario);
 app.post('/usuarios/login', UsuarioController.loginUsuario);
 
-
+// Rotas para Endereço
+app.post('/enderecos', EnderecoController.criarEndereco);
 
 
 app.listen(PORT, () => {
