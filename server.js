@@ -11,6 +11,9 @@ const UsuarioController = require('./controllers/UsuarioController'); // Importa
 const Endereco = require('./models/Endereco'); // Importa o modelo de Endereço
 const EnderecoController = require('./controllers/EnderecoControler'); // Importa o controlador de Endereço
 
+const Livro = require('./models/Livro'); // Importa o modelo de Livro
+const LivroController = require('./controllers/LivroController'); // Importa o controlador de Livro
+
 
 dotenv.config(); // Carrega as variáveis de ambiente do arquivo .env
 
@@ -48,6 +51,10 @@ app.post('/usuarios/login', UsuarioController.loginUsuario);
 
 // Rotas para Endereço
 app.post('/enderecos', EnderecoController.criarEndereco);
+
+//Rotas para Livro
+app.post('/livros', LivroController.criarLivro);
+
 
 
 app.listen(PORT, () => {
