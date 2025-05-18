@@ -3,7 +3,7 @@ const Livro = require('../models/Livro');
 // Função para criar um novo livro
 const criarLivro = async (req, res) => {
     try {
-        const { titulo, autor, editora, anoPublicacao, genero, isbn, quantidade } = req.body;
+        const { titulo, autor, editora, anoPublicacao, genero, isbn, localizacao, quantidade } = req.body;
 
         // Verifica se o livro já existe
         const livroExistente = await Livro.findOne({ isbn });
@@ -12,7 +12,7 @@ const criarLivro = async (req, res) => {
         }
 
         // Cria um novo livro
-        const novoLivro = new Livro({ titulo, autor, editora, anoPublicacao, genero,isbn, quantidade });
+        const novoLivro = new Livro({ titulo, autor, editora, anoPublicacao, genero,isbn, localizacao, quantidade });
         await novoLivro.save();
 
         res.status(201).json({ livro: novoLivro });
