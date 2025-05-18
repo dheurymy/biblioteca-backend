@@ -19,9 +19,20 @@ const criarLivro = async (req, res) => {
     } catch (erro) {
         res.status(500).json({ mensagem: 'Erro ao criar livro.', erro });
     }
-}
+};
+
+//Função para buscar todos os livros
+const buscarLivros = async (req, res) => {
+    try {
+        const livros = await Livro.find();
+        res.status(200).json({ livros });
+    } catch (erro) {
+        res.status(500).json({ mensagem: 'Erro ao buscar livros.', erro });
+    }
+};
 
 
 module.exports = {
-    criarLivro,
+    criarLivro, 
+    buscarLivros
 };

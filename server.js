@@ -54,6 +54,7 @@ app.post('/enderecos', EnderecoController.criarEndereco);
 
 //Rotas para Livro
 app.post('/livros', LivroController.criarLivro);
+app.get('/livros', LivroController.buscarLivros);
 
 
 
