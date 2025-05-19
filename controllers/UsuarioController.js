@@ -27,7 +27,6 @@ const criarUsuario = async (req, res) => {
 
 
 
-
 const loginUsuario = async (req, res) => {
     try {
         const { cpf, senha } = req.body;
@@ -47,12 +46,18 @@ const loginUsuario = async (req, res) => {
         // Gera token JWT
         const token = usuario.generateAuthToken();
 
-        res.status(200).json({ mensagem: "Login realizado com sucesso!", token });
+        // Remove a senha antes de retornar os dados do usuário
+        const { senha: _, ...dadosUsuario } = usuario.toObject();
+
+        res.status(200).json({ 
+            mensagem: "Login realizado com sucesso!", 
+            token,
+            usuario: dadosUsuario 
+        });
     } catch (erro) {
         res.status(500).json({ mensagem: "Erro ao realizar login.", erro });
     }
 };
-
 
 
 
