@@ -8,6 +8,10 @@ const bcrypt = require('bcryptjs'); // Importa o módulo bcrypt para hash de sen
 const Usuario = require('./models/Usuario'); // Importa o modelo de Usuário
 const UsuarioController = require('./controllers/UsuarioController'); // Importa o controlador de Usuário
 
+const Funcionario = require('./models/Funcionario'); // Importa o modelo de Funcionário
+const FuncionarioController = require('./controllers/FuncionarioController'); // Importa o controlador de Funcionário
+
+
 const Endereco = require('./models/Endereco'); // Importa o modelo de Endereço
 const EnderecoController = require('./controllers/EnderecoControler'); // Importa o controlador de Endereço
 
@@ -48,6 +52,10 @@ app.get('/', (req, res) => {
 // Rotas para Usuário
 app.post('/usuarios', UsuarioController.criarUsuario);
 app.post('/usuarios/login', UsuarioController.loginUsuario);
+
+// Rotas para Funcionario
+app.post('/funcionarios', FuncionarioController.criarFuncionario);
+app.post('/funcionarios/login', FuncionarioController.loginFuncionario);
 
 // Rotas para Endereço
 app.post('/enderecos', EnderecoController.criarEndereco);

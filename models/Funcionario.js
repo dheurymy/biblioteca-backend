@@ -2,7 +2,7 @@ const mongoose = require('mongoose'); // Importa o módulo mongoose
 const bcrypt = require('bcryptjs'); // Importa o módulo bcryptjs para hash de senhas
 const jwt = require('jsonwebtoken'); // Importa o módulo jsonwebtoken para autenticação
 
-const UsuarioSchema = new mongoose.Schema({
+const FuncionarioSchema = new mongoose.Schema({
     nome: {
         type: String,
         required: true,
@@ -25,16 +25,11 @@ const UsuarioSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    tipoUsuario: {
-        type: String,
-        enum: ['aluno', 'professor'],
-        required: true,
-        default: 'aluno',
-    },
+   
 });
 
 // Função para hash da senha antes de salvar
-UsuarioSchema.pre('save', async function (next) {
+FuncionarioSchema.pre('save', async function (next) {
     const user = this;
     if (user.isModified('senha')) {
         user.senha = await bcrypt.hash(user.senha, 8);
@@ -43,15 +38,15 @@ UsuarioSchema.pre('save', async function (next) {
 });
 
 // Método para comparar senhas
-UsuarioSchema.methods.compareSenha = function (candidateSenha) {
+FuncionarioSchema.methods.compareSenha = function (candidateSenha) {
     return bcrypt.compare(candidateSenha, this.senha);
 };
 
 // Método para gerar token JWT
-UsuarioSchema.methods.generateAuthToken = function () {
+FuncionarioSchema.methods.generateAuthToken = function () {
     const user = this;
     const token = jwt.sign({ _id: user._id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
     return token;
 };
+module.exports = mongoose.model('Funcionario', FuncionarioSchema);
 
-module.exports = mongoose.model('Usuario', UsuarioSchema);
