@@ -66,7 +66,7 @@ app.post('/enderecos', EnderecoController.criarEndereco);
 app.post('/livros', LivroController.criarLivro);
 app.get('/livros', LivroController.buscarLivros);
 
-
+//to com preguiça
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor rodando na porta ${PORT}`);
