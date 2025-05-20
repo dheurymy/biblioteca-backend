@@ -32,6 +32,8 @@ const criarEndereco = async (req, res) => {
     }
 };
 
+
+
 module.exports = {
     criarEndereco
 };

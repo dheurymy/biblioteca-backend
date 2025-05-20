@@ -1,4 +1,5 @@
 const Usuario = require("../models/Usuario");
+const Endereco = require("../models/Endereco");
 const jwt = require('jsonwebtoken'); // Importa o módulo jsonwebtoken para autenticação
 const bcrypt = require("bcryptjs");
 
@@ -33,6 +34,7 @@ const loginUsuario = async (req, res) => {
 
         // Verifica se o usuário existe pelo CPF
         const usuario = await Usuario.findOne({ cpf });
+
         if (!usuario) {
             return res.status(400).json({ mensagem: "Usuário não encontrado." });
         }
@@ -43,16 +45,23 @@ const loginUsuario = async (req, res) => {
             return res.status(400).json({ mensagem: "Senha inválida." });
         }
 
+        const endereco = await Endereco.findOne({ usuarioId: usuario._id });
+
+
         // Gera token JWT
         const token = usuario.generateAuthToken();
 
         // Remove a senha antes de retornar os dados do usuário
         const { senha: _, ...dadosUsuario } = usuario.toObject();
 
+       
+
+
         res.status(200).json({ 
             mensagem: "Login realizado com sucesso!", 
             token,
-            usuario: dadosUsuario 
+            usuario: dadosUsuario,
+            endereco
         });
     } catch (erro) {
         res.status(500).json({ mensagem: "Erro ao realizar login.", erro });
