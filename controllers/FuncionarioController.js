@@ -32,27 +32,27 @@ const loginFuncionario = async (req, res) => {
         const { cpf, senha } = req.body;
 
         // Verifica se o Funcionário existe pelo CPF
-        const Funcionario = await Funcionario.findOne({ cpf });
-        if (!Funcionario) {
+        const funcionario = await Funcionario.findOne({ cpf });
+        if (!funcionario) {
             return res.status(400).json({ mensagem: "Funcionário não encontrado." });
         }
 
         // Verifica se a senha informada está correta
-        const senhaCorreta = await Funcionario.compareSenha(senha);
+        const senhaCorreta = await funcionario.compareSenha(senha);
         if (!senhaCorreta) {
             return res.status(400).json({ mensagem: "Senha inválida." });
         }
 
         // Gera token JWT
-        const token = Funcionario.generateAuthToken();
+        const token = funcionario.generateAuthToken();
 
         // Remove a senha antes de retornar os dados do Funcionário
-        const { senha: _, ...dadosFuncionario } = Funcionario.toObject();
+        const { senha: _, ...dadosFuncionario } = funcionario.toObject();
 
         res.status(200).json({ 
             mensagem: "Login realizado com sucesso!", 
             token,
-            Funcionario: dadosFuncionario 
+            funcionario: dadosFuncionario 
         });
     } catch (erro) {
         res.status(500).json({ mensagem: "Erro ao realizar login.", erro });
