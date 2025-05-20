@@ -59,8 +59,23 @@ const loginFuncionario = async (req, res) => {
     }
 };
 
+const verificarFuncionarioCPF = async (req, res) => {
+    try {
+        const { cpf } = req.body;
+
+        
+
+        const funcionarioExiste = await Funcionario.exists({ cpf });
+
+        return res.status(200).json({ existeFuncionario: funcionarioExiste ? true : false });
+
+    } catch (erro) {
+        res.status(500).json({ mensagem: "Erro interno no servidor." });
+    }
+};
 
 
 
 
-module.exports = { criarFuncionario, loginFuncionario };
+
+module.exports = { criarFuncionario, loginFuncionario, verificarFuncionarioCPF };
