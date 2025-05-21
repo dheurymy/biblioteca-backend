@@ -62,6 +62,7 @@ app.post('/funcionarios/verifica', FuncionarioController.verificarFuncionarioCPF
 
 // Rotas para Endereço
 app.post('/enderecos', EnderecoController.criarEndereco);
+app.put('/enderecos/:usuarioId', EnderecoController.atualizarEndereco);
 
 //Rotas para Livro
 app.post('/livros', LivroController.criarLivro);

@@ -33,7 +33,39 @@ const criarEndereco = async (req, res) => {
 };
 
 
+const atualizarEndereco = async (req, res) => {
+    try {
+        const { usuarioId } = req.params;
+        const { logradouro, numero, complemento, bairro, cidade, estado, cep } = req.body;
+
+        // Verifica se o endereço existe para o usuário
+        const endereco = await Endereco.findOne({ usuarioId });
+
+        if (!endereco) {
+            return res.status(404).json({ mensagem: "Endereço não encontrado para este usuário." });
+        }
+
+        // Atualiza os campos fornecidos
+        endereco.logradouro = logradouro ?? endereco.logradouro;
+        endereco.numero = numero ?? endereco.numero;
+        endereco.complemento = complemento ?? endereco.complemento;
+        endereco.bairro = bairro ?? endereco.bairro;
+        endereco.cidade = cidade ?? endereco.cidade;
+        endereco.estado = estado ?? endereco.estado;
+        endereco.cep = cep ?? endereco.cep;
+
+        await endereco.save();
+
+        res.status(200).json({ mensagem: "Endereço atualizado com sucesso.", endereco });
+    } catch (erro) {
+        console.error("Erro ao atualizar endereço:", erro.message);
+        res.status(500).json({ mensagem: "Erro ao atualizar endereço.", erro });
+    }
+};
+
+
 
 module.exports = {
-    criarEndereco
+    criarEndereco,
+    atualizarEndereco
 };
