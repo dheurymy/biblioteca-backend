@@ -53,6 +53,7 @@ app.get('/', (req, res) => {
 app.post('/usuarios', UsuarioController.criarUsuario);
 app.post('/usuarios/login', UsuarioController.loginUsuario);
 app.post('/usuarios/verifica', UsuarioController.verificarUsuarioCPF);
+app.put('/usuarios/:id',UsuarioController.atualizarUsuario);
 
 // Rotas para Funcionario
 app.post('/funcionarios', FuncionarioController.criarFuncionario);
