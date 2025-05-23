@@ -129,6 +129,22 @@ const listarEmprestimosAtrasados = async (req, res) => {
     }
 };
 
+const listarEmprestimosId = async (req,res) => {
+    const { id } = req.params;
+    try {
+        const emprestimosCpf = await Emprestimo.find({ usuarioId: id })
+            .populate('usuarioId', 'nome cpf')
+            .populate('funcionarioId', 'nome cpf')
+            .populate('livroId', 'titulo isbn');
+
+        res.status(200).json({ emprestimos: emprestimosCpf });
+    } catch (erro) {
+        console.error("Erro ao listar empréstimos :", erro.message);
+        res.status(500).json({ mensagem: 'Erro ao listar empréstimos.', erro });
+    }
+
+};
+
 
 
 
@@ -143,7 +159,8 @@ module.exports = {
     criarEmprestimo,
     finalizarEmprestimo,
     listarEmprestimosPendentes,
-    listarEmprestimosAtrasados
+    listarEmprestimosAtrasados, 
+    listarEmprestimosId
    
 
    

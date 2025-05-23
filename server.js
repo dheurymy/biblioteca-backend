@@ -79,6 +79,7 @@ app.post('/emprestimos', EmprestimoController.criarEmprestimo);
 app.put('/emprestimos/finalizar/:id', EmprestimoController.finalizarEmprestimo);
 app.get('/emprestimos/pendentes', EmprestimoController.listarEmprestimosPendentes);
 app.get('/emprestimos/atrasados', EmprestimoController.listarEmprestimosAtrasados);
+app.get('/emprestimos/:id', EmprestimoController.listarEmprestimosId);
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor rodando na porta ${PORT}`);
