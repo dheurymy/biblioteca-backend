@@ -18,6 +18,9 @@ const EnderecoController = require('./controllers/EnderecoControler'); // Import
 const Livro = require('./models/Livro'); // Importa o modelo de Livro
 const LivroController = require('./controllers/LivroController'); // Importa o controlador de Livro
 
+const Emprestimo = require('./models/Emprestimo');
+const EmprestimoController = require('./controllers/EmprestimoController');
+
 
 dotenv.config(); // Carrega as variáveis de ambiente do arquivo .env
 
@@ -67,8 +70,15 @@ app.put('/enderecos/:usuarioId', EnderecoController.atualizarEndereco);
 //Rotas para Livro
 app.post('/livros', LivroController.criarLivro);
 app.get('/livros', LivroController.buscarLivros);
+app.put('/livros/emprestar/:isbn', LivroController.emprestarLivro);
+app.put('/livros/devolver/:isbn', LivroController.devolverLivro);
+app.get('/livros/mais-emprestados', LivroController.listarLivrosMaisEmprestados);
 
-//to com preguiça
+//Rotas para Emprestimo
+app.post('/emprestimos', EmprestimoController.criarEmprestimo);
+app.put('/emprestimos/finalizar/:id', EmprestimoController.finalizarEmprestimo);
+app.get('/emprestimos/pendentes', EmprestimoController.listarEmprestimosPendentes);
+app.get('/emprestimos/atrasados', EmprestimoController.listarEmprestimosAtrasados);
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor rodando na porta ${PORT}`);
