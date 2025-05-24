@@ -162,7 +162,9 @@ const obterEmprestimosPendentesPorCPF = async (req, res) => {
         const emprestimosPendentes = await Emprestimo.find({ 
             usuarioId: usuario._id, 
             dataDevolucaoReal: { $exists: false } // ou { $eq: null }
-        });
+        }).populate('usuarioId', 'nome cpf')
+            .populate('funcionarioId', 'nome cpf')
+            .populate('livroId', 'titulo isbn');
 
         return res.status(200).json(emprestimosPendentes);
     } catch (error) {
