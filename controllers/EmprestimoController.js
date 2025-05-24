@@ -147,6 +147,33 @@ const listarEmprestimosId = async (req,res) => {
 
 
 
+const obterEmprestimosPendentesPorCPF = async (req, res) => {
+    try {
+        const { cpf } = req.params; 
+
+        // Busca o usuário pelo CPF
+        const usuario = await Usuario.findOne({ cpf: cpf });
+
+        if (!usuario) {
+            return res.status(404).json({ message: "Usuário não encontrado!" });
+        }
+
+        // Busca empréstimos onde dataDevolucaoReal não existe e pertencem ao usuário
+        const emprestimosPendentes = await Emprestimo.find({ 
+            usuarioId: usuario._id, 
+            dataDevolucaoReal: { $exists: false } // ou { $eq: null }
+        });
+
+        return res.status(200).json(emprestimosPendentes);
+    } catch (error) {
+        console.error("Erro ao buscar empréstimos pendentes:", error);
+        return res.status(500).json({ message: "Erro ao buscar empréstimos pendentes." });
+    }
+};
+
+
+
+
 
 
 
@@ -160,7 +187,8 @@ module.exports = {
     finalizarEmprestimo,
     listarEmprestimosPendentes,
     listarEmprestimosAtrasados, 
-    listarEmprestimosId
+    listarEmprestimosId, 
+    obterEmprestimosPendentesPorCPF
    
 
    
