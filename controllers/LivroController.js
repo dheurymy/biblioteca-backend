@@ -157,6 +157,34 @@ const listarLivrosMaisEmprestados = async (req, res) => {
     }
 };
 
+const verificarQuantidadeLivros = async (req, res) => {
+    try {
+        const { isbn } = req.params;
+
+        // Busca o livro pelo ISBN
+        const livro = await Livro.findOne({ isbn });
+        if (!livro) {
+            return res.status(404).json({ mensagem: 'Livro não encontrado.' });
+        }
+
+        // Busca a quantidade de empréstimos ativos para o livro
+        const emprestimosAtivos = await Emprestimo.find({ isbnLivro: isbn });
+
+        res.status(200).json({
+            titulo: livro.titulo,
+            autor: livro.autor,
+            isbn: livro.isbn,
+            quantidadeDisponivel: livro.quantidade,
+            quantidadeEmprestada: emprestimosAtivos.length,
+            mensagem: emprestimosAtivos.length 
+                ? `Existem ${emprestimosAtivos.length} exemplares emprestados deste livro.` 
+                : "Nenhum exemplar emprestado no momento."
+        });
+    } catch (erro) {
+        res.status(500).json({ mensagem: 'Erro ao verificar quantidade de livros e empréstimos.', erro });
+    }
+};
+
 
 
 
@@ -167,5 +195,6 @@ module.exports = {
     buscarLivroIsbn,
     emprestarLivro,
     devolverLivro,
-    listarLivrosMaisEmprestados
+    listarLivrosMaisEmprestados,
+    verificarQuantidadeLivros
 };

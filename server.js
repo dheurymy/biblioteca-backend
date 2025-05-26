@@ -75,7 +75,7 @@ app.put('/livros/devolver/:isbn', LivroController.devolverLivro);
 app.get('/livros/mais-emprestados', LivroController.listarLivrosMaisEmprestados);
 app.put('/livros/quantidade', LivroController.alterarQuantidadeLivro);
 app.get('/livros/:isbn', LivroController.buscarLivroIsbn);
-
+app.get('/livros/quantidade/:isbn', LivroController.verificarQuantidadeLivros);
 //Rotas para Emprestimo
 app.post('/emprestimos', EmprestimoController.criarEmprestimo);
 app.put('/emprestimos/finalizar/:id', EmprestimoController.finalizarEmprestimo);
