@@ -83,7 +83,7 @@ app.get('/emprestimos/pendentes', EmprestimoController.listarEmprestimosPendente
 app.get('/emprestimos/atrasados', EmprestimoController.listarEmprestimosAtrasados);
 app.get('/emprestimos/:id', EmprestimoController.listarEmprestimosId);
 app.get('/emprestimos-pendentes/:cpf', EmprestimoController.obterEmprestimosPendentesPorCPF);
-
+//oi
 app.listen(PORT, () => {
   console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });
