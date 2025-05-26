@@ -168,7 +168,7 @@ const verificarQuantidadeLivros = async (req, res) => {
         }
 
         // Busca a quantidade de empréstimos ativos para o livro
-        const emprestimosAtivos = await Emprestimo.find({ isbnLivro: isbn });
+        const emprestimosAtivos = await Emprestimo.find({ livroId: livro._id});
 
         res.status(200).json({
             titulo: livro.titulo,
