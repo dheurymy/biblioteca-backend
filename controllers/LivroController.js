@@ -32,6 +32,26 @@ const buscarLivros = async (req, res) => {
     }
 };
 
+const alterarQuantidadeLivro = async (req, res) => {
+    try {
+        const { isbn, novaQuantidade } = req.body;
+
+        // Verifica se o livro existe
+        const livro = await Livro.findOne({ isbn });
+        if (!livro) {
+            return res.status(404).json({ mensagem: 'Livro não encontrado.' });
+        }
+
+        // Atualiza a quantidade do livro
+        livro.quantidade = novaQuantidade;
+        await livro.save();
+
+        res.status(200).json({ mensagem: 'Quantidade de livros atualizada com sucesso.', livro });
+    } catch (erro) {
+        res.status(500).json({ mensagem: 'Erro ao atualizar quantidade do livro.', erro });
+    }
+};
+
 const emprestarLivro = async (req, res) => {
     try {
         const { isbn } = req.params;
@@ -126,6 +146,7 @@ const listarLivrosMaisEmprestados = async (req, res) => {
 module.exports = {
     criarLivro, 
     buscarLivros,
+    alterarQuantidadeLivro,
     emprestarLivro,
     devolverLivro,
     listarLivrosMaisEmprestados

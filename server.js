@@ -73,6 +73,7 @@ app.get('/livros', LivroController.buscarLivros);
 app.put('/livros/emprestar/:isbn', LivroController.emprestarLivro);
 app.put('/livros/devolver/:isbn', LivroController.devolverLivro);
 app.get('/livros/mais-emprestados', LivroController.listarLivrosMaisEmprestados);
+app.put('/livros/quantidade/:isbn', LivroController.alterarQuantidadeLivro);
 
 //Rotas para Emprestimo
 app.post('/emprestimos', EmprestimoController.criarEmprestimo);

@@ -73,7 +73,7 @@ const finalizarEmprestimo = async (req, res) => {
         // Calcula multa se houver atraso
         const atrasoDias = Math.ceil((dataAtual - emprestimo.dataDevolucaoPrevista) / (1000 * 60 * 60 * 24));
         if (atrasoDias > 0) {
-            const valorMultaPorDia = 1; // Exemplo: R$2 por dia de atraso
+            const valorMultaPorDia = 1; 
             emprestimo.multa = atrasoDias * valorMultaPorDia;
         }
 
